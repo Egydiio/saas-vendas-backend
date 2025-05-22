@@ -21,10 +21,10 @@ API em Laravel desenvolvida para um sistema SaaS de vendas online. A plataforma 
 
 ## Requisitos
 
-- PHP >= 8.1
+- PHP >= 8.4
 - Composer
-- MySQL ou PostgreSQL
-- [Extensão PHP OpenSSL](https://www.php.net/manual/pt_BR/book.openssl.php)
+- MySQL 8.0
+- Docker
 
 ## Instalação
 
