@@ -98,4 +98,4 @@ Resposta:
 > Consulte a documentação completa dos endpoints para detalhes de parâmetros e respostas.
 
 
-> Projeto desenvolvido por [Seu Nome](https://github.com/Egydiio)
+> Projeto desenvolvido por [João Egydio](https://github.com/Egydiio)
