@@ -5,18 +5,31 @@
 ### tenants
 Empresas que utilizam o sistema.
 
+### Relacionamentos:
 
-| Campo        | Tipo       | Descrição               |
-|--------------|------------|-------------------------|
-| id           | UUID (PK)  | Identificador único     |
-| name         | String     | Nome da empresa         |
-| created_at   | Timestamp  | Data de criação         |
-| updated_at   | Timestamp  | Última atualização      |
+- tenant->hasMany(users)
+- tenant->hasMany(products)
+- tenant->hasMany(customers)
+- tenant->hasMany(sales)
+
+
+| Campo      | Tipo       | Descrição           |
+|------------|------------|---------------------|
+| id         | UUID (PK)  | Identificador único |
+| name       | String     | Nome da empresa     |
+| created_at | Timestamp  | Data de criação     |
+| updated_at | Timestamp  | Última atualização  |
+| deleted_at | Timestamp  | Data de desativação |
 
 ---
 
 ### users
 Usuários do sistema, ligados a um tenant.
+
+### Relacionamentos:
+
+- user->belongsTo(tenant)
+- user->hasMany(sales)
 
 | Campo        | Tipo       | Descrição               |
 |--------------|------------|-------------------------|
@@ -34,6 +47,11 @@ Usuários do sistema, ligados a um tenant.
 ### products
 Produtos cadastrados por uma empresa.
 
+### Relacionamentos:
+
+- product->belongsTo(tenant)
+- product->hasMany(saleItems)
+
 | Campo        | Tipo       | Descrição               |
 |--------------|------------|-------------------------|
 | id           | UUID (PK)  | Identificador único     |
@@ -48,6 +66,11 @@ Produtos cadastrados por uma empresa.
 
 ### customers
 Clientes das empresas (finais).
+
+### Relacionamentos:
+
+- customer->belongsTo(tenant)
+- customer->hasMany(sales)
 
 | Campo        | Tipo       | Descrição               |
 |--------------|------------|-------------------------|
@@ -64,6 +87,13 @@ Clientes das empresas (finais).
 ### sales
 Pedidos de venda realizados.
 
+### Relacionamentos:
+
+- sale->belongsTo(tenant)
+- sale->belongsTo(user)
+- sale->belongsTo(customer)
+- sale->hasMany(items)
+
 | Campo        | Tipo       | Descrição               |
 |--------------|------------|-------------------------|
 | id           | UUID (PK)  | Identificador único     |
@@ -77,6 +107,11 @@ Pedidos de venda realizados.
 
 ### sale_items
 Itens vendidos em um pedido.
+
+### Relacionamentos:
+
+- saleItem->belongsTo(sale)
+- saleItem->belongsTo(product)
 
 | Campo        | Tipo       | Descrição                   |
 |--------------|------------|-----------------------------|
