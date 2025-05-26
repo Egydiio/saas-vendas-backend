@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sale__items', function (Blueprint $table) {
-            $table->uuid();
-            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+        Schema::create('sale_items', function (Blueprint $table) {
+            $table->uuid()->unique()->primary();
+            $table->uuid('sale_id');
+            $table->foreign('sale_id')->references('uuid')->on('sales')->onDelete('cascade');
+            $table->uuid('product_id');
+            $table->foreign('product_id')->references('uuid')->on('products')->onDelete('cascade');
             $table->integer('quantity')->unsigned();
             $table->integer('unit_price')->unsigned();
             $table->timestamps();

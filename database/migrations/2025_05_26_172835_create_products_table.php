@@ -12,8 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('products', function (Blueprint $table) {
-            $table->uuid();
-            $table->foreignId('tenant_id')->constrained()->onDelete('cascade');
+            $table->uuid()->unique()->primary();
+            $table->uuid('tenant_id');
+            $table->foreign('tenant_id')->references('uuid')->on('tenants')->onDelete('cascade');
             $table->string('name');
             $table->integer('price')->nullable()->unsigned();
             $table->integer('stock')->nullable()->unsigned();
