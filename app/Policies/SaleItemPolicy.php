@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Costumer;
+use App\Models\Sale_Items;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class CostumerPolicy
+class SaleItemPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class CostumerPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Costumer $costumer): bool
+    public function view(User $user, Sale_Items $saleItems): bool
     {
         return false;
     }
@@ -35,7 +35,7 @@ class CostumerPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Costumer $costumer): bool
+    public function update(User $user, Sale_Items $saleItems): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class CostumerPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Costumer $costumer): bool
+    public function delete(User $user, Sale_Items $saleItems): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class CostumerPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Costumer $costumer): bool
+    public function restore(User $user, Sale_Items $saleItems): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class CostumerPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Costumer $costumer): bool
+    public function forceDelete(User $user, Sale_Items $saleItems): bool
     {
         return false;
     }
