@@ -1,0 +1,6 @@
+{
+    "testsFolderPath": "/tests/Perry",
+    "testExecutorPath": "/vendor/bin/phpunit",
+    "swaggerOutputPath": "/perry_output/swagger",
+    "cacheOutputPath": "/perry_output/cache"
+}

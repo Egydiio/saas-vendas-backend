@@ -9,8 +9,8 @@ class UserPolicy
     /**
      * Create a new policy instance.
      */
-    public function __construct()
+    public function store(User $user): bool
     {
-        //
+        return true;
     }
 }
