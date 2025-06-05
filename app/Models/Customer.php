@@ -7,18 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Product extends Model
+class Customer extends Model
 {
-    /** @use HasFactory<\Database\Factories\ProductFactory> */
+    /** @use HasFactory<\Database\Factories\CustomerFactory> */
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'customers';
 
     protected $fillable = [
         'tenant_id',
         'name',
-        'price',
-        'stock',
+        'email',
+        'phone',
         'created_at',
         'updated_at',
     ];
@@ -28,13 +28,13 @@ class Product extends Model
         return $this->belongsTo(Tenant::class, 'tenant_id');
     }
 
-    public function saleItems(): hasMany
+    public function sales(): hasMany
     {
-        return $this->hasMany(Sale_Items::class, 'product_id');
+        return $this->hasMany(Sale::class, 'customer_id');
     }
 
     protected $casts = [
-        'price' => 'decimal:2',
-        'stock' => 'integer',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 }

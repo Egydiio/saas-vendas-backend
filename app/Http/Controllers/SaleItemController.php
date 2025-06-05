@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreSale_ItemsRequest;
-use App\Http\Requests\UpdateSale_ItemsRequest;
+use App\Http\Requests\StoreSaleItemRequest;
+use App\Http\Requests\UpdateSaleItemRequest;
 use App\Models\Sale_Items;
 
-class SaleItemsController extends Controller
+class SaleItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class SaleItemsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreSale_ItemsRequest $request)
+    public function store(StoreSaleItemRequest $request)
     {
         //
     }
@@ -51,7 +51,7 @@ class SaleItemsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSale_ItemsRequest $request, Sale_Items $sale_Items)
+    public function update(UpdateSaleItemRequest $request, Sale_Items $sale_Items)
     {
         //
     }
