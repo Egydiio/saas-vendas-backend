@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
             $table->uuid('customer_id');
             $table->foreign('customer_id')->references('uuid')->on('costumers')->onDelete('cascade');
-            $table->integer('amount');
+            $table->integer('total');
             $table->timestamps();
         });
     }

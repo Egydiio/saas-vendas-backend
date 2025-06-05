@@ -40,7 +40,7 @@ Empresas que utilizam o sistema.
 ---
 
 ### users
-Usuários do sistema, ligados a um tenant.
+Utilizadores do sistema, ligados a um tenant.
 
 #### Relacionamentos:
 - user->belongsTo(tenant)
@@ -54,7 +54,6 @@ Usuários do sistema, ligados a um tenant.
 | name         | String     | Nome do usuário                    |
 | email        | String     | Email (único por tenant)           |
 | password     | String     | Hash da senha                      |
-| role         | Enum       | SuperAdmin, admin, manager, seller |
 | created_at   | Timestamp  | Data de criação                    |
 | updated_at   | Timestamp  | Última atualização                 |
 
@@ -68,18 +67,22 @@ Permissões do sistema (ex: acessar módulo X, exportar dados, etc).
 | id           | UUID (PK)  | Identificador único      |
 | name         | String     | Nome da permissão        |
 | description  | String     | Descrição da permissão   |
+| created_at   | Timestamp  | Data de criação          |
+| updated_at   | Timestamp  | Última atualização       |
 
 ---
 
 ### tenant_permissions
 Permissões habilitadas para cada tenant (por plano ou módulos extras).
 
-| Campo           | Tipo       | Descrição                       |
-|-----------------|------------|---------------------------------|
-| id              | UUID (PK)  | Identificador único             |
-| tenant_id       | UUID (FK)  | Relacionado a `tenants`         |
-| permission_id   | UUID (FK)  | Relacionado a `permissions`     |
-| enabled         | Boolean    | Permissão ativa/desativada      |
+| Campo          | Tipo       | Descrição                    |
+|----------------|------------|------------------------------|
+| id             | UUID (PK)  | Identificador único          |
+| tenant_id      | UUID (FK)  | Relacionado a `tenants`      |
+| permission_id  | UUID (FK)  | Relacionado a `permissions`  |
+| enabled        | Boolean    | Permissão ativa/desativada   |
+| created_at     | Timestamp  | Data de criação              |
+| updated_at     | Timestamp  | Última atualização           |
 
 ---
 
@@ -91,31 +94,37 @@ Regras de acesso para usuários (ex: pode editar produto, pode ver relatório).
 | id           | UUID (PK)  | Identificador único      |
 | name         | String     | Nome da regra            |
 | description  | String     | Descrição da regra       |
+| created_at   | Timestamp  | Data de criação          |
+| updated_at   | Timestamp  | Última atualização       |
 
 ---
 
 ### user_rules
 Regras atribuídas a usuários.
 
-| Campo        | Tipo       | Descrição                       |
-|--------------|------------|---------------------------------|
-| id           | UUID (PK)  | Identificador único             |
-| user_id      | UUID (FK)  | Relacionado a `users`           |
-| rule_id      | UUID (FK)  | Relacionado a `rules`           |
-| enabled      | Boolean    | Regra ativa/desativada          |
+| Campo        | Tipo       | Descrição                     |
+|--------------|------------|-------------------------------|
+| id           | UUID (PK)  | Identificador único           |
+| user_id      | UUID (FK)  | Relacionado a `users`         |
+| rule_id      | UUID (FK)  | Relacionado a `rules`         |
+| enabled      | Boolean    | Regra ativa/desativada        |
+| created_at   | Timestamp  | Data de criação               |
+| updated_at   | Timestamp  | Última atualização            |
 
 ---
 
-### tenant_modules (opcional)
+### tenant_modules
 Módulos extras adquiridos por tenant (ex: módulo de relatórios avançados).
 
-| Campo        | Tipo       | Descrição                       |
-|--------------|------------|---------------------------------|
-| id           | UUID (PK)  | Identificador único             |
-| tenant_id    | UUID (FK)  | Relacionado a `tenants`         |
-| module_name  | String     | Nome do módulo                  |
-| enabled      | Boolean    | Módulo ativo/desativado         |
-| acquired_at  | Timestamp  | Data de aquisição               |
+| Campo        | Tipo       | Descrição                      |
+|--------------|------------|--------------------------------|
+| id           | UUID (PK)  | Identificador único            |
+| tenant_id    | UUID (FK)  | Relacionado a `tenants`        |
+| module_name  | String     | Nome do módulo                 |
+| enabled      | Boolean    | Módulo ativo/desativado        |
+| acquired_at  | Timestamp  | Data de aquisição              |
+| created_at   | Timestamp  | Data de criação                |
+| updated_at   | Timestamp  | Última atualização             |
 
 ---
 
