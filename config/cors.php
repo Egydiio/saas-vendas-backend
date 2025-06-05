@@ -7,7 +7,7 @@ return [
      */
     'paths' => ['api/*', 'sanctum/csrf-cookie'], // Aplica o CORS a todas as rotas da API e ao cookie do Sanctum
     'allowed_methods' => ['*'], // Permite todos os métodos (GET, POST, PUT, DELETE, etc.)
-    'allowed_origins' => ['http://localhost:5173', 'http://127.0.0.1:5173'], // **ADICIONE A PORTA DO SEU FRONTEND AQUI**
+    'allowed_origins' => ['http://localhost:5173', 'http://127.0.0.1:5173', 'http://localhost'], // **ADICIONE A PORTA DO SEU FRONTEND AQUI**
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'], // Permite todos os cabeçalhos
     'exposed_headers' => [],
