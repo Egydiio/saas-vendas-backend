@@ -1,0 +1,9 @@
+openapi: 3.0.0
+servers:
+    - { description: 'Example server local', url: 'http://localhost:8000' }
+info:
+    version: 1.0.0
+    title: 'Example server title'
+    description: 'Example server description'
+paths:
+    /api/users: { post: { summary: 'should create user', description: 'should create user', operationId: test_shouldCreateUser, responses: { 201: { description: '201', content: { application/json: { schema: { type: object, properties: { uui: { type: string, example: ef05a606-9d76-4931-8752-3c26968f8420 }, tenant_id: { type: string, example: 03a17637-0d7a-4113-8e37-3c6b1a047906 }, name: { type: string, example: 'João Silva' }, email: { type: string, example: joao@example.com }, role: { type: string, example: admin }, created_at: { type: string, example: '2025-06-05T04:05:21.000000Z' }, updated_at: { type: string, example: '2025-06-05T04:05:21.000000Z' } } } } } } }, requestBody: { description: 'should create user', content: { application/json: { schema: { type: object, properties: { name: { type: string, example: 'João Silva' }, tenant_id: { type: string, example: null }, email: { type: string, example: joao@example.com }, role: { type: string, example: admin }, password: { type: string, example: admin } } } } } } } }

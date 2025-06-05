@@ -2,16 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\UserResource;
+use App\Models\User;
+use App\Policies\UserPolicy;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
-        //
+        $users = User::all();
+        return UserResource::collection($users);
     }
 
     /**
@@ -25,9 +33,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        //
+        $validated['password'] = Hash::make($request['password']);
+        $user = User::create($validated);
+        return response()->json([
+            'message' => 'User created successfully',
+            'user' => new UserResource($user),
+        ], 201);
     }
 
     /**
@@ -49,7 +62,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
         //
     }
