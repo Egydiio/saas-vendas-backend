@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Tenant;
 use Illuminate\Database\Seeder;
 
 class TenantSeeder extends Seeder
@@ -12,6 +12,8 @@ class TenantSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Tenant::create([
+            'name' => 'Lojas Redes'
+        ]);
     }
 }
