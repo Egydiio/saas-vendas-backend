@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sale_items', function (Blueprint $table) {
-            $table->uuid()->unique()->primary();
-            $table->uuid('sale_id');
-            $table->foreign('sale_id')->references('uuid')->on('sales')->onDelete('cascade');
+        Schema::create('price_history', function (Blueprint $table) {
+            $table->uuid()->primary()->unique();
             $table->uuid('product_id');
             $table->foreign('product_id')->references('uuid')->on('products')->onDelete('cascade');
-            $table->integer('quantity')->unsigned();
-            $table->integer('unit_price')->unsigned();
+            $table->uuid('customers_id');
+            $table->foreign('customers_id')->references('uuid')->on('customers')->onDelete('cascade');
+            $table->integer('old_price');
+            $table->integer('new_price');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sale__items');
+        Schema::dropIfExists('price_history');
     }
 };

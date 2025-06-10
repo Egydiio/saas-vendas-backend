@@ -11,16 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('costumers', function (Blueprint $table) {
+        Schema::create('sales', function (Blueprint $table) {
             $table->uuid()->unique()->primary();
             $table->uuid('tenant_id');
             $table->foreign('tenant_id')->references('uuid')->on('tenants')->onDelete('cascade');
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone')->nullable();
+            $table->uuid('user_id');
+            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
+            $table->uuid('customer_id');
+            $table->foreign('customer_id')->references('uuid')->on('customers')->onDelete('cascade');
+            $table->enum('status', ['pending', 'processing', 'completed', 'cancelled'])->default('pending');
+            $table->integer('total');
             $table->timestamps();
-
-            $table->unique(['tenant_id', 'email']);
+            $table->softDeletes();
         });
     }
 
@@ -29,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('costumers');
+        Schema::dropIfExists('sales');
     }
 };
