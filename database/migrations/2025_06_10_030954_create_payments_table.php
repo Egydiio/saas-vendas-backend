@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->uuid()->unique()->primary();
+        Schema::create('payments', function (Blueprint $table) {
+            $table->uuid()->primary()->unique();
             $table->uuid('tenant_id');
             $table->foreign('tenant_id')->references('uuid')->on('tenants')->onDelete('cascade');
-            $table->uuid('user_id');
-            $table->foreign('user_id')->references('uuid')->on('users')->onDelete('cascade');
-            $table->uuid('customer_id');
-            $table->foreign('customer_id')->references('uuid')->on('costumers')->onDelete('cascade');
-            $table->integer('total');
+            $table->uuid('sale_id');
+            $table->foreign('sale_id')->references('uuid')->on('sales')->onDelete('cascade');
+            $table->string('method');
+            $table->integer('amount');
+            $table->dateTime('payment_date');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sales');
+        Schema::dropIfExists('payments');
     }
 };

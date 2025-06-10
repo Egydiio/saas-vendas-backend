@@ -15,10 +15,14 @@ return new class extends Migration
             $table->uuid()->unique()->primary();
             $table->uuid('tenant_id');
             $table->foreign('tenant_id')->references('uuid')->on('tenants')->onDelete('cascade');
+            $table->uuid('category_id');
+            $table->foreign('category_id')->references('uuid')->on('product_categories')->onDelete('cascade');
             $table->string('name');
+            $table->text('description');
             $table->integer('price')->nullable()->unsigned();
             $table->integer('stock')->nullable()->unsigned();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

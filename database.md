@@ -54,8 +54,10 @@ Utilizadores do sistema, ligados a um tenant.
 | name         | String     | Nome do usuário                    |
 | email        | String     | Email (único por tenant)           |
 | password     | String     | Hash da senha                      |
+| role         | String     | Papel do usuário no sistema        |
 | created_at   | Timestamp  | Data de criação                    |
 | updated_at   | Timestamp  | Última atualização                 |
+| deleted_at   | Timestamp  | Data de exclusão (para soft delete)|
 
 ---
 
@@ -134,16 +136,20 @@ Produtos cadastrados por uma empresa.
 #### Relacionamentos:
 - product->belongsTo(tenant)
 - product->hasMany(saleItems)
+- product->belongsTo(category)
 
-| Campo        | Tipo       | Descrição               |
-|--------------|------------|-------------------------|
-| id           | UUID (PK)  | Identificador único     |
-| tenant_id    | UUID (FK)  | Relacionado a `tenants` |
-| name         | String     | Nome do produto         |
-| price        | Decimal    | Preço unitário          |
-| stock        | Integer    | Quantidade em estoque   |
-| created_at   | Timestamp  | Data de criação         |
-| updated_at   | Timestamp  | Última atualização      |
+| Campo        | Tipo       | Descrição                          |
+|--------------|------------|------------------------------------|
+| id           | UUID (PK)  | Identificador único                |
+| tenant_id    | UUID (FK)  | Relacionado a `tenants`            |
+| category_id  | UUID (FK)  | Categoria do produto               |
+| name         | String     | Nome do produto                    |
+| description  | Text       | Descrição do produto               |
+| price        | Integer    | Preço unitário                     |
+| stock        | Integer    | Quantidade em estoque              |
+| created_at   | Timestamp  | Data de criação                    |
+| updated_at   | Timestamp  | Última atualização                 |
+| deleted_at   | Timestamp  | Data de exclusão (para soft delete)|
 
 ---
 
@@ -153,16 +159,19 @@ Clientes das empresas (finais).
 #### Relacionamentos:
 - customer->belongsTo(tenant)
 - customer->hasMany(sales)
+- customer->hasMany(addresses)
 
-| Campo        | Tipo       | Descrição               |
-|--------------|------------|-------------------------|
-| id           | UUID (PK)  | Identificador único     |
-| tenant_id    | UUID (FK)  | Relacionado a `tenants` |
-| name         | String     | Nome do cliente         |
-| email        | String     | Email                   |
-| phone        | String     | Telefone                |
-| created_at   | Timestamp  | Data de criação         |
-| updated_at   | Timestamp  | Última atualização      |
+| Campo        | Tipo       | Descrição                          |
+|--------------|------------|------------------------------------|
+| id           | UUID (PK)  | Identificador único                |
+| tenant_id    | UUID (FK)  | Relacionado a `tenants`            |
+| name         | String     | Nome do cliente                    |
+| email        | String     | Email                              |
+| phone        | String     | Telefone                           |
+| document     | String     | CPF/CNPJ                           |
+| created_at   | Timestamp  | Data de criação                    |
+| updated_at   | Timestamp  | Última atualização                 |
+| deleted_at   | Timestamp  | Data de exclusão (para soft delete)|
 
 ---
 
@@ -175,14 +184,17 @@ Pedidos de venda realizados.
 - sale->belongsTo(customer)
 - sale->hasMany(items)
 
-| Campo        | Tipo       | Descrição               |
-|--------------|------------|-------------------------|
-| id           | UUID (PK)  | Identificador único     |
-| tenant_id    | UUID (FK)  | Relacionado a `tenants` |
-| user_id      | UUID (FK)  | Quem realizou a venda   |
-| customer_id  | UUID (FK)  | Cliente final           |
-| total        | Decimal    | Valor total da venda    |
-| created_at   | Timestamp  | Data da venda           |
+| Campo        | Tipo       | Descrição                                |
+|--------------|------------|------------------------------------------|
+| id           | UUID (PK)  | Identificador único                      |
+| tenant_id    | UUID (FK)  | Relacionado a `tenants`                  |
+| user_id      | UUID (FK)  | Quem realizou a venda                    |
+| customer_id  | UUID (FK)  | Cliente final                            |
+| status       | Enum       | Status da venda (pendente, paga, etc.)   |
+| total        | Integer    | Valor total da venda                     |
+| created_at   | Timestamp  | Data da venda                            |
+| updated_at   | Timestamp  | Última atualização                       |
+| deleted_at   | Timestamp  | Data de exclusão (para soft delete)      |
 
 ---
 
@@ -193,15 +205,84 @@ Itens vendidos em um pedido.
 - saleItem->belongsTo(sale)
 - saleItem->belongsTo(product)
 
-| Campo        | Tipo       | Descrição                   |
-|--------------|------------|-----------------------------|
-| id           | UUID (PK)  | Identificador único         |
-| sale_id      | UUID (FK)  | Relacionado a `sales`       |
-| product_id   | UUID (FK)  | Produto vendido             |
-| quantity     | Integer    | Quantidade vendida          |
-| unit_price   | Decimal    | Preço do produto na venda   |
+| Campo      | Tipo      | Descrição                 |
+|------------|-----------|---------------------------|
+| id         | UUID (PK) | Identificador único       |
+| sale_id    | UUID (FK) | Relacionado a `sales`     |
+| product_id | UUID (FK) | Produto vendido           |
+| quantity   | Integer   | Quantidade vendida        |
+| unit_price | Integer   | Preço do produto na venda |
+| created_at | Timestamp | Data de criação           |
+| updated_at | Timestamp | Última atualização        |
 
 ---
+
+### product_categories
+Categorias para organizar produtos.
+
+| Campo        | Tipo       | Descrição                          |
+|--------------|------------|------------------------------------|
+| id           | UUID (PK)  | Identificador único                |
+| tenant_id    | UUID (FK)  | Relacionado a `tenants`            |
+| name         | String     | Nome da categoria                  |
+| description  | Text       | Descrição da categoria             |
+| created_at   | Timestamp  | Data de criação                    |
+| updated_at   | Timestamp  | Última atualização                 |
+
+---
+
+### customer_addresses
+Endereços dos clientes.
+
+| Campo        | Tipo       | Descrição                          |
+|--------------|------------|------------------------------------|
+| id           | UUID (PK)  | Identificador único                |
+| customer_id  | UUID (FK)  | Relacionado a `customers`          |
+| type         | String     | Tipo (entrega, cobrança, etc)      |
+| street       | String     | Rua                                |
+| number       | String     | Número                             |
+| complement   | String     | Complemento                        |
+| district     | String     | Bairro                             |
+| city         | String     | Cidade                             |
+| state        | String     | Estado                             |
+| postal_code  | String     | CEP                                |
+| is_default   | Boolean    | Endereço padrão                    |
+| created_at   | Timestamp  | Data de criação                    |
+| updated_at   | Timestamp  | Última atualização                 |
+
+---
+
+### payments
+Pagamentos das vendas.
+
+| Campo        | Tipo      | Descrição                          |
+|--------------|-----------|------------------------------------|
+| id           | UUID (PK) | Identificador único                |
+| tenant_id    | UUID (FK) | Relacionado a `tenants`            |
+| sale_id      | UUID (FK) | Relacionado a `sales`              |
+| method       | String    | Método de pagamento                |
+| status       | String    | Status do pagamento                |
+| amount       | Integer   | Valor do pagamento                 |
+| payment_date | Timestamp | Data do pagamento                  |
+| created_at   | Timestamp | Data de criação                    |
+| updated_at   | Timestamp | Última atualização                 |
+
+---
+
+### price_history
+Histórico de alterações de preços de produtos.
+
+| Campo        | Tipo      | Descrição                 |
+|--------------|-----------|---------------------------|
+| id           | UUID (PK) | Identificador único       |
+| product_id   | UUID (FK) | Relacionado a `products`  |
+| old_price    | Integer   | Preço anterior            |
+| new_price    | Integer   | Novo preço                |
+| changed_by   | UUID (FK) | Relacionado a `customers` |
+| created_at   | Timestamp | Data da alteração         |
+
+---
+
 
 ## 🛡️ Considerações sobre segurança
 
@@ -223,4 +304,3 @@ Itens vendidos em um pedido.
 - Webhooks para integrações externas
 - API Keys por tenant
 - Limites de uso por plano
-
